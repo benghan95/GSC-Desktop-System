@@ -1,0 +1,5 @@
+C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.csprojResolveAssemblyReference.cache
+C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\GSCWindowApp.exe
+C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\GSCWindowApp.pdb
+C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.exe
+C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.pdb
