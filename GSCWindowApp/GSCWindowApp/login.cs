@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GSCWindowApp
 {
-    class login
+    interface login
     {
     }
 }

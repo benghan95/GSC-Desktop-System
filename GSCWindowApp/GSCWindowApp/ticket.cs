@@ -13,15 +13,22 @@ namespace GSCWindowApp
 
         }
 
-        private void printTicket()
+        public void printTicket()
         {
             // doesn't actually print a ticket
             System.Console.WriteLine("Printing Ticket...");
         }
-        private void checkTicket()
+        public void checkTicket()
         {
             //checks ticket code with DB
+            
         }
+
+        public void ticketPrice()
+        {
+            //displays total price
+        }
+
     }
 
 }

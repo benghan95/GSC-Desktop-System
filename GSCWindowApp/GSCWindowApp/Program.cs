@@ -19,7 +19,7 @@ namespace GSCWindowApp
             //int menuInput = Convert.ToInt32(Console.ReadLine());
             bool loop = true;
 
-            while (loop = true)
+            while (loop == true)
             {
                 Console.WriteLine("Welcome to GSC");
                 Console.WriteLine("-------------------------------------------------");
