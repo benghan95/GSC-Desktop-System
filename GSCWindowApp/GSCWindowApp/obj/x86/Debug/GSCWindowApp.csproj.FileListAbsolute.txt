@@ -3,3 +3,5 @@ C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bi
 C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\GSCWindowApp.pdb
 C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.exe
 C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.pdb
+Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.exe
+Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.pdb

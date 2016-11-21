@@ -19,6 +19,16 @@ namespace GSCWindowApp
         public movie()
         {
             //display as arraylist and print all movies 
+            string query = "Select Name from Movie;";
+            string query2 = "Select ID from Movie;";
+
+            SQL sql = new SQL();
+
+            List<string> movieName = new List<string>();
+            List<string> movieID = new List<string>();
+            movieName = sql.Select(query);
+            movieID = sql.Select(query2);
+
         }
 
         public void displayDetails() //displays all details of movie
