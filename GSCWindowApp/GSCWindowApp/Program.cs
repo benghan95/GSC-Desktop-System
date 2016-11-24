@@ -10,7 +10,7 @@ namespace GSCWindowApp
     {
         static void Main(string[] args)
         {
-
+            
             //Console.WriteLine("Welcome to GSC");
             //Console.WriteLine("-------------------------------------------------");
             //Console.WriteLine("1.Search Movie");
@@ -33,7 +33,9 @@ namespace GSCWindowApp
                     case "1":
                         Console.WriteLine("Search Movie");
                         movie newCust = new movie();
-
+                        int mInput = newCust.display();
+                        newCust.displayDetails(mInput);
+                        newCust.addMovie();
                         Console.Read();
                         Console.Clear();
                         break;
@@ -58,6 +60,18 @@ namespace GSCWindowApp
                 }
             }
             
+
+           /* List<string> fromdatabase = new List<string>();
+            SQL sql = new SQL();
+            String derp = ("SELECT Name FROM Movie");
+            derp += ",";
+            derp+= ("SELECT MovieID FROM Movie");
+            fromdatabase = sql.Select(derp);
+
+            foreach (string i in fromdatabase)
+            {
+                Console.WriteLine("{0}", i );
+            }*/
 
             Console.ReadKey();
         }

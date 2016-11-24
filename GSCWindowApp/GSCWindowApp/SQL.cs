@@ -25,9 +25,9 @@ namespace GSCWindowApp
         private void Initialize()
         {
             server = "localhost";
-            database = "connectcsharptomysql";
-            uid = "username";
-            password = "password";
+            database = "gsc";
+            uid = "root";
+            password = "1234";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
@@ -175,4 +175,4 @@ namespace GSCWindowApp
             }
         }
     }
-}
+

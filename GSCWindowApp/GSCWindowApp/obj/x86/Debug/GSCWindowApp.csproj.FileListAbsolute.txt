@@ -5,3 +5,8 @@ C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\ob
 C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.pdb
 Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.exe
 Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.pdb
+Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\obj\x86\Debug\GSCWindowApp.csprojResolveAssemblyReference.cache
+Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\GSCWindowApp.exe
+Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\GSCWindowApp.pdb
+Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\MySql.Data.dll
+Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\MySql.Data.xml

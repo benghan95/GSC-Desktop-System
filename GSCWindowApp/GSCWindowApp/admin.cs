@@ -8,7 +8,7 @@ namespace GSCWindowApp
 {
     class admin: login
     {
-        admin()
+        public admin()
         {
             bool loop = true;
 
