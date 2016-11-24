@@ -1,5 +1,7 @@
 use GSC;
 
+drop table Movie;
+
 CREATE TABLE Movie
 (
   MovieID int NOT NULL AUTO_INCREMENT,
@@ -12,5 +14,5 @@ CREATE TABLE Movie
   PRIMARY KEY (MovieID)
 );
 
-INSERT INTO Movie (Name,Rating,Duration,Summary,Venue,Cinema,date,time) VALUES('Titanic','G', 90, 'JACK DIED', 'Paradigm', 2, '2016-10-20', '20:00:00');
+INSERT INTO Movie (Name,Rating,Duration,Summary,CreatedDate,EndDate) VALUES('Titanic','G', 90, 'JACK DIED', '2016-11-25', '2016-12-10');
 

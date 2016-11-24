@@ -35,7 +35,7 @@ namespace GSCWindowApp
                         movie newCust = new movie();
                         string mInput = newCust.display();
                         newCust.displayDetails(mInput);
-                        newCust.addMovie();
+                       // newCust.addMovie();
                         Console.Read();
                         Console.Clear();
                         break;

@@ -51,7 +51,7 @@ namespace GSCWindowApp
 
         public void displayDetails(string mInput) //displays all details of movie
         {
-            string[] arr1 = { "Name","Rating", "Duration", "Summary","Cinema", "date", "time" };
+            string[] arr1 = { "Name","Rating", "Duration", "Summary", "CreatedDate", "EndDate"};
             SQL sql = new SQL();
             List<string> details = new List<string>();
             foreach (string i in arr1)
@@ -82,14 +82,14 @@ namespace GSCWindowApp
             int totalPrice = (adultTicket * 4) + (childTicket*3) + (studentTicket*2) +(seniorTicket*1);
             int totalNum = (adultTicket + childTicket + studentTicket + seniorTicket);
 
-            string query = ("Select Number from TicketHistory where MovieID = '" + mInput + ' and Sid = '2';");
+            //string query = ("Select Number from TicketHistory where MovieID = '" + mInput + ' and Sid = '2';");
             string query2 = ("Select MovieID from Movie;");
 
             SQL sql = new SQL();
 
             List<string> movieName = new List<string>();
             List<string> movieID = new List<string>();
-            movieName = sql.Select(query);
+            //movieName = sql.Select(query);
             movieID = sql.Select(query2);
         }
 
@@ -114,13 +114,13 @@ namespace GSCWindowApp
         public void editVenue()
         {
             string mID = display();
-            string updateVenue = ("Update Movie SET Venue = 1 where MovieID = '3';")
+            string updateVenue = ("Update Movie SET Venue = 1 where MovieID = '3';");
         }
 
         public void deleteMovie()
         {
            string mID = display();
-            string delete = ("")
+            string delete = ("");
 
         }
 
