@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GSCWindowApp
 {
-    class staff : admin, login
+    class staff
     {
-        staff()
+        public staff()
         {
         }
 

@@ -87,9 +87,9 @@ namespace GSCWindowApp
                 }
             }
 
-            public void Insert()
+            public void Insert(string query)
             {
-                string query = ("INSERT INTO Movie (Name,Rating,Duration,Summary,Venue,Cinema,date,time) VALUES('Beep','PG-13', 95, 'BEEP BEEP', 'Midvalley', 5, '2016-11-21', '22:00:00')");
+                //string query = ("INSERT INTO Movie (Name,Rating,Duration,Summary,Venue,Cinema,date,time) VALUES('Beep','PG-13', 95, 'BEEP BEEP', 'Midvalley', 5, '2016-11-21', '22:00:00')");
 
                 if (this.OpenConnection() == true)
                 {

@@ -33,7 +33,7 @@ namespace GSCWindowApp
                     case "1":
                         Console.WriteLine("Search Movie");
                         movie newCust = new movie();
-                        int mInput = newCust.display();
+                        string mInput = newCust.display();
                         newCust.displayDetails(mInput);
                         newCust.addMovie();
                         Console.Read();
@@ -48,7 +48,12 @@ namespace GSCWindowApp
 
                     case "3":
                         Console.WriteLine("Login");
-                        Console.Read();
+                        string inputID, inputPass;
+                        Console.WriteLine("Login ID:");
+                        inputID = Console.ReadLine();
+                        Console.WriteLine("Password:");
+                        inputPass = Console.ReadLine();
+                        loginStaff(inputID, inputPass);
                         Console.Clear();
                         break;
 
@@ -59,6 +64,7 @@ namespace GSCWindowApp
                         break;
                 }
             }
+
             
 
            /* List<string> fromdatabase = new List<string>();
@@ -74,6 +80,71 @@ namespace GSCWindowApp
             }*/
 
             Console.ReadKey();
+        }
+        public static void loginStaff(string inputID, string inputPass)
+        {
+
+            SQL sql = new SQL();
+
+            List<string> loginInfo = new List<string>();
+            List<string> loginPass = new List<string>();
+            List<string> loginAdmin = new List<string>();
+
+            loginInfo = sql.Select("Select LoginID from Staff");
+            loginPass = sql.Select("Select Password from Staff;");
+            loginAdmin = sql.Select("Select isAdmin from Staff;");
+
+            int count = 0;
+            Boolean login = false;
+            Boolean pass = false;
+            Boolean bAdmin = false;
+
+            foreach (string i in loginInfo)
+            {
+                if(i == inputID)
+                {
+                    login = true;
+                }
+                count++;
+            }
+
+            if(login == true)
+            {
+                string password = loginPass.ElementAt(count-1);
+                Console.WriteLine(password);
+                if(password.Equals(inputPass))
+                {
+                    pass = true;
+                }
+            }
+
+            if(pass==true)
+            {
+                string admin = loginAdmin.ElementAt(count-1);
+                Console.WriteLine(admin);
+                
+
+                if(admin == "True")
+                {
+                    bAdmin = true;
+                }
+            }
+
+            if(login == true && pass == true && bAdmin == true)
+            {
+                Console.WriteLine("ADMIN VIEW");
+                admin adminlogon = new admin();
+                Console.ReadKey();
+            }
+
+            else if(login == true && pass == true && bAdmin == false)
+            {
+                Console.WriteLine("STAFF VIEW");
+                staff stafflogon = new staff();
+                stafflogon.staffUI();
+                Console.ReadKey();
+            }
+
         }
 
 
