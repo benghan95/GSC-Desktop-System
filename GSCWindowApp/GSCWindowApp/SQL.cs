@@ -12,7 +12,7 @@ namespace GSCWindowApp
         private MySqlConnection connection;
         private string server;
         private string database;
-        private string uid;
+        private string username;
         private string password;
 
         //Constructor
@@ -25,12 +25,12 @@ namespace GSCWindowApp
         private void Initialize()
         {
           server = "localhost";
-          database = "gsc";
-          uid = "root";
-          password = "1234";
+          database = "GSC";
+          username = "root";
+          password = "admin123";
           string connectionString;
-          connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-          database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+          connectionString = "SERVER=" + server + "; " + "DATABASE=" + database + "; " + 
+                             "UID=" + username + "; " + "PASSWORD=" + password + ";";
           connection = new MySqlConnection(connectionString);
         }
         
@@ -133,82 +133,82 @@ namespace GSCWindowApp
             this.CloseConnection();
           }
         }
-
-            
-
-            public void Update()
-            {
-                string query = "UPDATE table info SET name='Joe', age='22' WHERE name='John Smith'";
-
-                if (this.OpenConnection() == true)
-                {
-                    MySqlCommand cmd = new MySqlCommand();
-                    cmd.CommandText = query;
-                    cmd.Connection = connection;
-                    cmd.ExecuteNonQuery();
-                    this.CloseConnection();
-                }
+        public void UpdateById(string tableName, string primaryKey, int id, string attribute, string newValue){
+          string query = "UPDATE " + tableName + " SET " + attribute + "='" + newValue + "' WHERE " + primaryKey + "=" + id;
+          if (this.OpenConnection() == true)
+          {
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            try{
+              if(cmd.ExecuteNonQuery() == 1){
+                Console.WriteLine("Updated table row of the database!");
+              } else{
+                Console.WriteLine("Unable to update the database.");
+              }
+            } catch (Exception e){
+              Console.WriteLine(e);
             }
-
-            public List<string> Select(string query)
-            {
-                //string query = ("SELECT Name FROM Movie");
-
-                List<string> list = new List<string>();
-
-
-                if (this.OpenConnection() == true)
-                {
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        // Console.WriteLine("" + dataReader.GetString(0));
-                        list.Add(dataReader.GetString(0));
-                    }
-
-                    dataReader.Close();
-                    this.CloseConnection();
-
-                    return list;
-                }
-
-                else
-                {
-                    return list;
-                }
-            }
-
-            public List<int> SelectInt(string query)
-            {
-                //string query = ("SELECT Name FROM Movie");
-
-                List<int> list = new List<int>();
-
-
-                if (this.OpenConnection() == true)
-                {
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        // Console.WriteLine("" + dataReader.GetString(0));
-                        list.Add(dataReader.GetInt32(0));
-                    }
-
-                    dataReader.Close();
-                    this.CloseConnection();
-
-                    return list;
-                }
-
-                else
-                {
-                    return list;
-                }
-            }
+            this.CloseConnection();
+          }
         }
+        //public List<string> Select(string query)
+        //{
+        //    //string query = ("SELECT Name FROM Movie");
+
+        //    List<string> list = new List<string>();
+
+
+        //    if (this.OpenConnection() == true)
+        //    {
+        //        MySqlCommand cmd = new MySqlCommand(query, connection);
+        //        MySqlDataReader dataReader = cmd.ExecuteReader();
+
+        //        while (dataReader.Read())
+        //        {
+        //            // Console.WriteLine("" + dataReader.GetString(0));
+        //            list.Add(dataReader.GetString(0));
+        //        }
+
+        //        dataReader.Close();
+        //        this.CloseConnection();
+
+        //        return list;
+        //    }
+
+        //    else
+        //    {
+        //        return list;
+        //    }
+        //}
+
+        //public List<int> SelectInt(string query)
+        //{
+        //    //string query = ("SELECT Name FROM Movie");
+
+        //    List<int> list = new List<int>();
+
+
+        //    if (this.OpenConnection() == true)
+        //    {
+        //        MySqlCommand cmd = new MySqlCommand(query, connection);
+        //        MySqlDataReader dataReader = cmd.ExecuteReader();
+
+        //        while (dataReader.Read())
+        //        {
+        //            // Console.WriteLine("" + dataReader.GetString(0));
+        //            list.Add(dataReader.GetInt32(0));
+        //        }
+
+        //        dataReader.Close();
+        //        this.CloseConnection();
+
+        //        return list;
+        //    }
+
+        //    else
+        //    {
+        //        return list;
+        //    }
+        //}
+      }
     }
 

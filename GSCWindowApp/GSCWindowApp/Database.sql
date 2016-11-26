@@ -44,15 +44,15 @@ CREATE TABLE Movie
   duration  INT(32),
   summary VARCHAR(500),
   createdDate DATETIME,
-  available BOOLEAN,
+  isAvailable BOOLEAN,
   PRIMARY KEY (movieID)
 );
 
-INSERT INTO Movie (name, ageRating, duration, summary, createdDate, available) 
+INSERT INTO Movie (name, ageRating, duration, summary, createdDate, isAvailable) 
 	VALUES('Warcraft', 'PG', 120, 'Warcraft is a 2016 American action-fantasy film directed by Duncan Jones and written by Jones, Charles Leavitt and Chris Metzen.', '2016-05-23T12:00:00', true);
-INSERT INTO Movie (name, ageRating, duration, summary, createdDate, available) 
+INSERT INTO Movie (name, ageRating, duration, summary, createdDate, isAvailable) 
 	VALUES('Avengers 2', '13', 150, 'Marvel good movie', '2015-12-20T12:00:00', false);
-INSERT INTO Movie (name, ageRating, duration, summary, createdDate, available) 
+INSERT INTO Movie (name, ageRating, duration, summary, createdDate, isAvailable) 
 	VALUES('Civil War', '13', 180, 'Captain America vs Ironman', '2016-08-13T12:00:00', true);
 
 SELECT * FROM Movie; 

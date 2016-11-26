@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GSCWindowApp
 {
-    class ticket : movie
+    class Ticket
     {
-        ticket()
+        Ticket()
         {
 
         }

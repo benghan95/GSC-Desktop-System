@@ -28,7 +28,7 @@ namespace GSCWindowApp
                 Console.WriteLine("\t8. Add New Staff");
                 Console.WriteLine("\t9. Exit");
                 Console.WriteLine("=================================================");
-                Console.Write("\tPlease select one option (1 - 9): ");
+                Console.Write("Please select one option (1 - 9): ");
                 
                 option = Console.ReadLine();
 
@@ -39,7 +39,6 @@ namespace GSCWindowApp
                     Console.WriteLine("--- 1. View Movie List ---");
                     Console.WriteLine("--------------------------");
                     viewMovieList();
-                    Console.WriteLine("==========================");
                     break;
 
                   case "2":
@@ -47,7 +46,6 @@ namespace GSCWindowApp
                     Console.WriteLine("------ 2. Add Movie ------");
                     Console.WriteLine("--------------------------");
                     addMovie();
-                    Console.WriteLine("==========================");
                     break;
 
                   case "3":
@@ -55,14 +53,13 @@ namespace GSCWindowApp
                     Console.WriteLine("------ 3. Edit Movie -----");
                     Console.WriteLine("--------------------------");
                     editMovie();
-                    Console.WriteLine("==========================");
                     break;
 
                   case "4":
                     Console.WriteLine("--------------------------");
                     Console.WriteLine("---- 4. Delete Movie -----");
                     Console.WriteLine("--------------------------");
-                    cancelMovie();
+                    //cancelMovie();
                     Console.WriteLine("==========================");
                     break;                   
                   
@@ -70,7 +67,7 @@ namespace GSCWindowApp
                     Console.WriteLine("--------------------------");
                     Console.WriteLine("---- 5. Add Showtime -----");
                     Console.WriteLine("--------------------------");
-                    addShowtime();
+                    //addShowtime();
                     Console.WriteLine("==========================");
                     break; 
                   
@@ -78,7 +75,7 @@ namespace GSCWindowApp
                     Console.WriteLine("--------------------------");
                     Console.WriteLine("---- 6. Edit Showtime -----");
                     Console.WriteLine("--------------------------");
-                    editShowtime();
+                    //editShowtime();
                     Console.WriteLine("==========================");
                     break; 
                     
@@ -86,7 +83,7 @@ namespace GSCWindowApp
                     Console.WriteLine("--------------------------");
                     Console.WriteLine("--- 7. Remove Showtime ---");
                     Console.WriteLine("--------------------------");
-                    removeShowtime();
+                    //removeShowtime();
                     Console.WriteLine("==========================");
                     break; 
                   
@@ -94,7 +91,7 @@ namespace GSCWindowApp
                     Console.WriteLine("--------------------------");
                     Console.WriteLine("---- 8. Add New Staff ----");
                     Console.WriteLine("--------------------------");
-                    addNewStaff();
+                    //addNewStaff();
                     Console.WriteLine("==========================");
                     break; 
                   
@@ -116,8 +113,8 @@ namespace GSCWindowApp
         }
         
         private void viewMovieList(){
-          Movie newMovie = new Movie();
-          newMovie.addMovie();
+          Movie movieList = new Movie();
+          movieList.displayAllMovies();
         }
         
         private void addMovie(){
@@ -127,7 +124,10 @@ namespace GSCWindowApp
         
         private void editMovie(){
           Movie movie = new Movie();
+          movie.displayAllMovies();
           movie.editMovie();
         }
+        
+        
     }
 }
