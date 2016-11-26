@@ -18,87 +18,123 @@ namespace GSCWindowApp
         //Constructor
         public SQL()
         {
-            Initialize();
+          Initialize();
         }
 
         //Initialize values
         private void Initialize()
         {
-            server = "localhost";
-            database = "gsc";
-            uid = "root";
-            password = "1234";
-            string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+          server = "localhost";
+          database = "gsc";
+          uid = "root";
+          password = "1234";
+          string connectionString;
+          connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+          database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+          connection = new MySqlConnection(connectionString);
+        }
+        
+        public MySqlConnection Connection
+        {
+          get
+          {
+            return connection;
+          }
+    
+          set
+          {
+            connection = value;
+          }
+        }
+        
+        private bool OpenConnection()
+        {
+          try
+          {   
+              connection.Open();
+              Console.WriteLine("Connected to the database");
+              return true;
+          }
+          catch (MySqlException e)
+          {
+            switch (e.Number)
+            {
+              case 0:
+                Console.WriteLine("Cannot connect to server. Please contact administrator!");
+                Console.WriteLine(e);
+                break;
 
-            connection = new MySqlConnection(connectionString);
+              case 1045:
+                Console.WriteLine("Invalid username/password, please try again");
+                Console.WriteLine(e);
+                break;
+            }
+            return false;
+          }
+        }
+        private bool CloseConnection()
+        {
+          try
+          {
+            connection.Close();
+            return true;
+          }
+          catch (MySqlException e)
+          {
+            Console.WriteLine(e.Message);
+            return false;
+          }
+        }
+        public void Select(string query, int counter)
+        {
+          if (this.OpenConnection() == true)
+          {
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            string[] array = new string[counter];
+            try{
+              MySqlDataReader reader = cmd.ExecuteReader();
+              while(reader.Read()){
+                for(int i = 0; i < counter; i ++){
+                  array[i] = reader.GetString(i);
+                }
+              }
+            } catch(Exception e){
+              Console.WriteLine(e);
+            }
+            this.CloseConnection();
+          }
+        }
+        public void Select(string query)
+        {
+            int d = 1;
+            query = ("DELETE FROM Staff WHERE LoginID = " + d);
+
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                this.CloseConnection();
+            }
+        }
+        public void Insert(string query)
+        {
+          if (this.OpenConnection() == true)
+          {
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            try{
+              if(cmd.ExecuteNonQuery() == 1){
+                Console.WriteLine("Added into the database!");
+              } else{
+                Console.WriteLine("Unable to insert into database.");
+              }
+            } catch (Exception e){
+              Console.WriteLine(e);
+            }
+            this.CloseConnection();
+          }
         }
 
-        private bool OpenConnection()
-            {
-                try
-                {
-                connection.Open();
-                    //Console.WriteLine("YAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-                    return true;
-                }
-                catch (MySqlException ex)
-                {
-
-                    switch (ex.Number)
-                    {
-                        case 0:
-                            Console.WriteLine("Cannot connect to server.  Contact administrator");
-                            break;
-
-                        case 1045:
-                            Console.WriteLine("Invalid username/password, please try again");
-                            break;
-                    }
-                    return false;
-                }
-            }
-
-            private bool CloseConnection()
-            {
-                try
-                {
-                    connection.Close();
-                    return true;
-                }
-                catch (MySqlException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return false;
-                }
-            }
-
-            public void Delete()
-            {
-                int d = 1;
-                string query = ("DELETE FROM Staff WHERE LoginID = " + d);
-
-                if (this.OpenConnection() == true)
-                {
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    cmd.ExecuteNonQuery();
-                    this.CloseConnection();
-                }
-            }
-
-            public void Insert(string query)
-            {
-                //string query = ("INSERT INTO Movie (Name,Rating,Duration,Summary,Venue,Cinema,date,time) VALUES('Beep','PG-13', 95, 'BEEP BEEP', 'Midvalley', 5, '2016-11-21', '22:00:00')");
-
-                if (this.OpenConnection() == true)
-                {
-
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    cmd.ExecuteNonQuery();
-                    this.CloseConnection();
-                }
-            }
+            
 
             public void Update()
             {
