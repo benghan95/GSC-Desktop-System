@@ -35,13 +35,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin.cs" />
-    <Compile Include="LoginPage.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Showtime.cs" />
     <Compile Include="SQL.cs" />
-    <Compile Include="StaffPage.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="Hall.cs" />
     <Compile Include="Staff.cs" />
