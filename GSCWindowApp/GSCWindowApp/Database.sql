@@ -94,8 +94,8 @@ CREATE TABLE Showtime
   movieID INT,
   hallID INT,
   PRIMARY KEY (showtimeID),
-  FOREIGN KEY (movieID) REFERENCES Movie(movieID),
-  FOREIGN KEY (hallID) REFERENCES Hall(hallID)
+  CONSTRAINT FK_ToMovie FOREIGN KEY (movieID) REFERENCES Movie(movieID),
+  CONSTRAINT FK_ToHall FOREIGN KEY (hallID) REFERENCES Hall(hallID)
 );
 
 INSERT INTO Showtime (startDateTime, endDateTime, ticketsAvailable, movieID, hallID) 
@@ -118,7 +118,7 @@ CREATE TABLE Ticket
   ticketType VARCHAR(10),
   showtimeID INT,
   PRIMARY KEY (ticketID),
-  FOREIGN KEY (showtimeID) REFERENCES Showtime(showtimeID)
+  CONSTRAINT FK_ToShowtime FOREIGN KEY (showtimeID) REFERENCES Showtime(showtimeID)
 );
 
 INSERT INTO Ticket (ticketCode, seatNo, ticketPrice, ticketType, showtimeID) 
