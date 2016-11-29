@@ -27,7 +27,7 @@ namespace GSCWindowApp
       server = "localhost";
       database = "GSC";
       username = "root";
-      password = "admin123";
+      password = "1234";
       string connectionString;
       connectionString = "SERVER=" + server + "; " + "DATABASE=" + database + "; " + 
                          "UID=" + username + "; " + "PASSWORD=" + password + ";";

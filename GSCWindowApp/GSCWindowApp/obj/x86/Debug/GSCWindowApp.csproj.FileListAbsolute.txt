@@ -10,3 +10,5 @@ Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\GSCWindowApp.ex
 Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\GSCWindowApp.pdb
 Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\MySql.Data.dll
 Z:\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\MySql.Data.xml
+C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\MySql.Data.dll
+C:\Users\hongcl\Documents\GitHub\GSC-Desktop-System\GSCWindowApp\GSCWindowApp\bin\Debug\MySql.Data.xml

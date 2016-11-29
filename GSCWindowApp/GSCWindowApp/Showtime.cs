@@ -102,7 +102,7 @@ namespace GSCWindowApp
         
         if(sql.checkRowExists(query) > 0){
           query = ("INSERT INTO Showtime(startDateTime, endDateTime, ticketsAvailable, seatsLayout, movieID, hallID) VALUES('" + 
-                         startDateTime.ToString("s") + "', '" + startDateTime.AddMinutes(movieList.getDuration(movieID)).ToString("s") + "', " + 
+                         startDateTime.ToString("s") + "', '" + startDateTime.AddDays(movieList.getDuration(movieID)).ToString("s") + "', " + 
                          hallList.getCapacity(hallID) + ", '" + hallList.generateSeatsLayout(hallID) + "', " + movieID + ", " + hallID + ");");
           sql.Insert(query);
           Console.WriteLine("Showtime has been added");
@@ -226,8 +226,8 @@ namespace GSCWindowApp
             Console.WriteLine("Start DateTime: " + reader.GetDateTime(1).ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
             Console.WriteLine("End DateTime: " + reader.GetDateTime(2).ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
             Console.WriteLine("Tickets Available: " + reader.GetInt32(3));
-            Console.WriteLine("Movie ID: " + reader.GetInt32(4));
-            Console.WriteLine("Hall ID: " + reader.GetInt32(5));
+            Console.WriteLine("Movie ID: " + reader.GetInt32(5));
+            Console.WriteLine("Hall ID: " + reader.GetInt32(6));
             Console.WriteLine("");
             counter++;
           }
