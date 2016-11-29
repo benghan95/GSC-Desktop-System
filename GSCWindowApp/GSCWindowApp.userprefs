@@ -1,15 +1,5 @@
 ﻿<Properties StartupConfiguration="{C1857BEB-F7A5-441E-A0B2-D4869448281A}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GSCWindowApp/Main.cs">
-    <Files>
-      <File FileName="GSCWindowApp/Movie.cs" Line="136" Column="11" />
-      <File FileName="GSCWindowApp/SQL.cs" Line="235" Column="25" />
-      <File FileName="GSCWindowApp/Showtime.cs" Line="15" Column="29" />
-      <File FileName="GSCWindowApp/Staff.cs" Line="65" Column="15" />
-      <File FileName="GSCWindowApp/Ticket.cs" Line="37" Column="34" />
-      <File FileName="GSCWindowApp/Hall.cs" Line="119" Column="51" />
-      <File FileName="GSCWindowApp/Main.cs" Line="12" Column="7" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.ItemProperties.GSCWindowApp PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

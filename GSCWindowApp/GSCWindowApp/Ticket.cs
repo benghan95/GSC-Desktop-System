@@ -53,7 +53,6 @@ namespace GSCWindowApp
           selectedSeats[j] = Console.ReadLine();
         }
         showtimeList.reserveSeats(showtimeID, selectedSeats);
-        Console.WriteLine("The seats have been reserved!");
         bool online = true;
         while(online){
           Console.WriteLine("Do you want to proceed to payment? (Y/N)");

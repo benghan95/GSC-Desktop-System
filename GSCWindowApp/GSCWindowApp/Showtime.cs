@@ -23,9 +23,13 @@ namespace GSCWindowApp
         while(reader.Read()){
           seatsLayout = reader.GetString(0);
         }
+        sql.Connection.Close();
         for(int i = 0; i < selectedSeats.Length; i ++){
           seatsLayout = seatsLayout.Replace(selectedSeats[i], "   ");
         }
+        query = ("UPDATE Showtime SET seatsLayout=" + seatsLayout + " WHERE showtimeID=" + showtimeID + ";");
+        sql.Update(query);
+        Console.WriteLine("The seats have been reserved!");
       } catch(Exception e){
         Console.WriteLine(e);
       }

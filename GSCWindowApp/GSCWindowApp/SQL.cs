@@ -150,6 +150,23 @@ namespace GSCWindowApp
         this.CloseConnection();
       }
     }
+    public void Update(string query)
+    {
+      if (this.OpenConnection() == true)
+      {
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        try{
+          if(cmd.ExecuteNonQuery() == 1){
+            Console.WriteLine("Updated data from he database!");
+          } else{
+            Console.WriteLine("Unable to update the data in the database.");
+          }
+        } catch (Exception e){
+          Console.WriteLine(e);
+        }
+        this.CloseConnection();
+      }
+    }
     public void Delete(string query)
     {
       if (this.OpenConnection() == true)
