@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
+using MySql.Data.MySqlClient;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,16 +54,18 @@ namespace GSCWindowApp
           Console.Write("Please choose the seats ID that you want (" + totalNoOfTickets + "remainings): ");
           selectedSeats[j] = Console.ReadLine();
         }
-        showtimeList.reserveSeats(showtimeID, selectedSeats);
+        displayTicketsInformation(selectedTicketList);
         bool online = true;
         while(online){
           Console.WriteLine("Do you want to proceed to payment? (Y/N)");
           input = Console.ReadLine();
           switch(input){
             case "Y":
-              printReceipt(selectedTicketList);
+              showtimeList.reserveSeats(showtimeID, selectedSeats);
+              printTickets(showtimeID, selectedTicketList);
               break;
             case "N":
+              showtimeList.reserveSeats(showtimeID, selectedSeats);
               Console.WriteLine("Please pay at the counter when you collect your ticket.");
               online = false;
               break;
@@ -76,6 +80,15 @@ namespace GSCWindowApp
         Console.WriteLine("No showtime with the showtime ID given! Please try again later.");
       } 
     }
+    public void displayTicketsInformation(List<Ticket> selectedTicketList){
+      Console.WriteLine("==========================================");
+      Console.WriteLine("-------------- Confirmation --------------");
+      Console.WriteLine("==========================================");
+      int i = 1;
+      foreach(Ticket ticket in selectedTicketList){
+        Console.WriteLine("\t" + i++ + ". " + ticket.TicketType + "\tx " + ticket.NoOfTickets + " = " + ticket.TicketPrice*ticket.NoOfTickets);
+      }
+    }
     public void printReceipt(List<Ticket> selectedTicketList){
       Console.WriteLine("==========================================");
       Console.WriteLine("------------- Ticket Receipt -------------");
@@ -89,6 +102,28 @@ namespace GSCWindowApp
       Console.WriteLine("------------------------------------------");
       Console.WriteLine("\tTotal (include GST 6%): " + totalAmount*1.06);
       Console.WriteLine("------------------------------------------");
+    }
+    public void printTickets(int showtimeID, List<Ticket> selectedTicketList){
+      string query = ("SELECT m.name FROM Showtime st INNER JOIN Movie m ON st.movieID = m.movieID " +
+                      "WHERE st.showtimeID=" + showtimeID + ";");
+      SQL sql = new SQL();
+      sql.Connection.Open();
+      MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
+      object temp = cmd.ExecuteScalar();
+      string movieName = temp.ToString();
+      
+      foreach(Ticket ticket in selectedTicketList){
+        for(int counter = 0; counter < ticket.NoOfTickets; counter ++){
+          Console.WriteLine("==========================================");
+          Console.WriteLine("---------------- e-Ticket ----------------");
+          Console.WriteLine("==========================================");
+          Console.WriteLine("\t" + "Movie Name: " + movieName);
+          Console.WriteLine("\t" + "Ticket Code: " + ticket.TicketPrice);
+          Console.WriteLine("\t" + "Ticket Type: " + ticket.TicketType);
+          Console.WriteLine("\t" + "Ticket Price: " + ticket.TicketPrice);
+          Console.WriteLine("==========================================");
+        }
+      }
     }
     public List<Ticket> selectTicket(){
       List<Ticket> ticketList = new List<Ticket>();

@@ -29,6 +29,8 @@ namespace GSCWindowApp
         }
         query = ("UPDATE Showtime SET seatsLayout=" + seatsLayout + " WHERE showtimeID=" + showtimeID + ";");
         sql.Update(query);
+        query = ("UPDATE Showtime SET ticketsAvailable = ticketsAvailable - " + selectedSeats.Length + " WHERE showtimeID=" + showtimeID + ";");
+        sql.Update(query);
         Console.WriteLine("The seats have been reserved!");
       } catch(Exception e){
         Console.WriteLine(e);
