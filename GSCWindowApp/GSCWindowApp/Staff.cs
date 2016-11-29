@@ -22,118 +22,87 @@ namespace GSCWindowApp
         Console.WriteLine("=================================================");
         Console.WriteLine("---------------- GSC Staff Panel ----------------");
         Console.WriteLine("=================================================");
-        Console.WriteLine("\t1. Search Movie");
-        Console.WriteLine("\t2. Add Movie");
-        Console.WriteLine("\t3. Edit Movie");
-        Console.WriteLine("\t4. Remove Movie");
-        Console.WriteLine("\t5. View Showtimes");
-        Console.WriteLine("\t6. Add Showtime");
-        Console.WriteLine("\t7. Remove Showtime");
-        Console.WriteLine("\t8. View All Staff");
-        Console.WriteLine("\t9. Add New Staff");
-        Console.WriteLine("\t10. Exit");
+        Console.WriteLine("\t1. View Upcoming Showtimes");
+        Console.WriteLine("\t2. Search Showtime");
+        Console.WriteLine("\t3. Buy Movie Ticket");
+        Console.WriteLine("\t4. Exit");
         Console.WriteLine("=================================================");
-        Console.Write("Please select one option (1 - 10): ");
+        Console.Write("Please select one option (1 - 4): ");
         
         option = Console.ReadLine();
 
         switch (option)
         {
           case "1":
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("--- 1. View Movie List ---");
-            Console.WriteLine("--------------------------");
-            //viewMovieList();
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("---- 1. View Upcoming Showtimes ----");
+            Console.WriteLine("------------------------------------");
+            viewShowtimes();
             break;
 
           case "2":
             Console.WriteLine("--------------------------");
-            Console.WriteLine("------ 2. Add Movie ------");
+            Console.WriteLine("--- 2. Search Showtime ---");
             Console.WriteLine("--------------------------");
-            //addMovie();
+            searchShowtimes();
             break;
 
           case "3":
             Console.WriteLine("--------------------------");
-            Console.WriteLine("------ 3. Edit Movie -----");
+            Console.WriteLine("------ 3. Buy Ticket -----");
             Console.WriteLine("--------------------------");
-            //editMovie();
+            buyTicket();
             break;
-
+            
           case "4":
             Console.WriteLine("--------------------------");
-            Console.WriteLine("---- 4. Remove Movie -----");
-            Console.WriteLine("--------------------------");
-            //removeMovie();
-            break;                   
-          
-          case "5":
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("--- 5. View Showtimes ----");
-            Console.WriteLine("--------------------------");
-            //viewShowtimes();
-            break; 
-          
-          case "6":
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("---- 6. Add Showtime -----");
-            Console.WriteLine("--------------------------");
-            //addShowtime();
-            break; 
-            
-          case "7":
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("--- 7. Remove Showtime ---");
-            Console.WriteLine("--------------------------");
-            //removeShowtime();
-            break; 
-          
-          case "8":
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("--- 8. View All Staff ----");
-            Console.WriteLine("--------------------------");
-            //viewStaffList();
-            break; 
-          
-          case "9":
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("---- 9. Add New Staff ----");
-            Console.WriteLine("--------------------------");
-            //addNewStaff();
-            break; 
-            
-          case "10":
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("---- 10. Exit System -----");
+            Console.WriteLine("--------- 4. Exit --------");
             Console.WriteLine("--------------------------");
             online = false;
             break;
             
           default:
-              Console.WriteLine("Invalid Input. Enter numbers 1-10 only. Press any key to return to menu");
+              Console.WriteLine("Invalid Input. Enter numbers 1-4 only. Press any key to return to menu");
               Console.ReadKey();
               Console.Clear();
               break;
         }
       }
     }
+    private void viewShowtimes(){
+      Showtime showtimeList = new Showtime();
+      showtimeList.displayTodaysShowtimes();
+    }
+    private void searchShowtimes(){
+      Showtime showtimeList = new Showtime();
+      showtimeList.findMovieShowtimes();
+    }
+    private void buyTicket(){
+      Ticket ticket = new Ticket();
+      ticket.buyTicket();
+    }
     public void authentication(){
-      Console.Write("Enter username: ");
-      string username = Console.ReadLine();
-      
-      Console.Write("Enter password: ");
-      string password = Console.ReadLine();
-      
-      if(password.Equals(getPassword(username))){
-        Console.WriteLine("Login successful!");
-        if(getIsAdmin(username)){
-          Admin admin = new Admin();
-          admin.Initialize();
+      bool online = true;
+      while(online){
+        Console.Write("Enter username: ");
+        string username = Console.ReadLine();
+        
+        Console.Write("Enter password: ");
+        string password = Console.ReadLine();
+        
+        if(password.Equals(getPassword(username))){
+          Console.WriteLine("Login successful!");
+          if(getIsAdmin(username)){
+            Admin admin = new Admin();
+            admin.Initialize();
+            online = false;
+          } else{
+            Initialize();
+            online = false;
+          }
         } else{
-          Initialize();
+          Console.WriteLine("Invalid Password! Please try again.");
         }
-      } else{
-        Console.WriteLine("Invalid Password! Please try again.");
       }
     }
     public string getPassword(string username){

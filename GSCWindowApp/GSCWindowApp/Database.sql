@@ -91,6 +91,7 @@ CREATE TABLE Showtime
   startDateTime DATETIME,
   endDateTime DATETIME,
   ticketsAvailable INT(32),
+  seatsLayout VARCHAR(10000),
   movieID INT,
   hallID INT,
   PRIMARY KEY (showtimeID),

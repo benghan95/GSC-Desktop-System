@@ -16,207 +16,44 @@ namespace GSCWindowApp
     
     public string getMovieName(int movieID){
       string query = ("SELECT name FROM Movie WHERE movieID=" + movieID + ";");
-      string movieName = null;
       SQL sql = new SQL();
-      try
-      {   
-        sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
-        MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
-        try{
-          object temp = cmd.ExecuteScalar();
-          movieName = temp.ToString();
-        } catch(Exception e){
-          Console.WriteLine(e);
-        }
-        sql.Connection.Close();
-      }
-      catch (MySqlException e)
-      {
-        switch (e.Number)
-        {
-          case 0:
-            Console.WriteLine("Cannot connect to server. Please contact administrator!");
-            Console.WriteLine(e);
-            break;
-
-          case 1045:
-            Console.WriteLine("Invalid username/password, please try again");
-            Console.WriteLine(e);
-            break;
-        }
-      }
+      string movieName = sql.getStringColumn(query);
+      
       return movieName;
     }
     public string getAgeRating(int movieID){
       string query = ("SELECT ageRating FROM Movie WHERE movieID=" + movieID + ";");
-      string ageRating = null;
       SQL sql = new SQL();
-      try
-      {   
-        sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
-        MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
-        try{
-          object temp = cmd.ExecuteScalar();
-          ageRating = temp.ToString();
-        } catch(Exception e){
-          Console.WriteLine(e);
-        }
-        sql.Connection.Close();
-      }
-      catch (MySqlException e)
-      {
-        switch (e.Number)
-        {
-          case 0:
-            Console.WriteLine("Cannot connect to server. Please contact administrator!");
-            Console.WriteLine(e);
-            break;
+      string ageRating = sql.getStringColumn(query);
 
-          case 1045:
-            Console.WriteLine("Invalid username/password, please try again");
-            Console.WriteLine(e);
-            break;
-        }
-      }
       return ageRating;
     }
     public int getDuration(int movieID){
       string query = ("SELECT duration FROM Movie WHERE movieID=" + movieID + ";");
-      int duration = 0;
       SQL sql = new SQL();
-      try
-      {   
-        sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
-        MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
-        try{
-          object temp = cmd.ExecuteScalar();
-          duration = Int32.Parse(temp.ToString());
-        } catch(Exception e){
-          Console.WriteLine(e);
-        }
-        sql.Connection.Close();
-      }
-      catch (MySqlException e)
-      {
-        switch (e.Number)
-        {
-          case 0:
-            Console.WriteLine("Cannot connect to server. Please contact administrator!");
-            Console.WriteLine(e);
-            break;
-
-          case 1045:
-            Console.WriteLine("Invalid username/password, please try again");
-            Console.WriteLine(e);
-            break;
-        }
-      }
+      int duration = sql.getIntColumn(query);
+      
       return duration;
     }
     public string getMovieSummary(int movieID){
       string query = ("SELECT summary FROM Movie WHERE movieID=" + movieID + ";");
-      string movieSummary = null;
       SQL sql = new SQL();
-      try
-      {   
-        sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
-        MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
-        try{
-          object temp = cmd.ExecuteScalar();
-          movieSummary = temp.ToString();
-        } catch(Exception e){
-          Console.WriteLine(e);
-        }
-        sql.Connection.Close();
-      }
-      catch (MySqlException e)
-      {
-        switch (e.Number)
-        {
-          case 0:
-            Console.WriteLine("Cannot connect to server. Please contact administrator!");
-            Console.WriteLine(e);
-            break;
-
-          case 1045:
-            Console.WriteLine("Invalid username/password, please try again");
-            Console.WriteLine(e);
-            break;
-        }
-      }
+      string movieSummary = sql.getStringColumn(query);
+      
       return movieSummary;
     }
     public DateTime getCreatedDate(int movieID){
       string query = ("SELECT createdDate FROM Movie WHERE movieID=" + movieID + ";");
-      DateTime createdDate = DateTime.Now;
       SQL sql = new SQL();
-      try
-      {   
-        sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
-        MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
-        try{
-          object temp = cmd.ExecuteScalar();
-          createdDate = DateTime.Parse(temp.ToString());
-          
-        } catch(Exception e){
-          Console.WriteLine(e);
-        }
-        sql.Connection.Close();
-      }
-      catch (MySqlException e)
-      {
-        switch (e.Number)
-        {
-          case 0:
-            Console.WriteLine("Cannot connect to server. Please contact administrator!");
-            Console.WriteLine(e);
-            break;
-
-          case 1045:
-            Console.WriteLine("Invalid username/password, please try again");
-            Console.WriteLine(e);
-            break;
-        }
-      }
+      DateTime createdDate = sql.getDateTimeColumn(query);
+      
       return createdDate;
     }
     public bool getAvailability(int movieID){
       string query = ("SELECT isAvailable FROM Movie WHERE movieID=" + movieID + ";");
-      bool isAvailable = false;
       SQL sql = new SQL();
-      try
-      {   
-        sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
-        MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
-        try{
-          object temp = cmd.ExecuteScalar();
-          isAvailable = Boolean.Parse(temp.ToString());
-        } catch(Exception e){
-          Console.WriteLine(e);
-        }
-        sql.Connection.Close();
-      }
-      catch (MySqlException e)
-      {
-        switch (e.Number)
-        {
-          case 0:
-            Console.WriteLine("Cannot connect to server. Please contact administrator!");
-            Console.WriteLine(e);
-            break;
-
-          case 1045:
-            Console.WriteLine("Invalid username/password, please try again");
-            Console.WriteLine(e);
-            break;
-        }
-      }
+      bool isAvailable = sql.getBooleanColumn(query);
+      
       return isAvailable;
     }
     public void addMovie(){
@@ -231,15 +68,7 @@ namespace GSCWindowApp
       Console.Write("Enter Duration of the movie: ");
       input = Console.ReadLine();
       
-      int movieDuration = 0;
-      try{
-        while(!Int32.TryParse(input, out movieDuration)){
-          Console.Write("Duration must be an integer!");
-          input = Console.ReadLine();
-        }
-      } catch (Exception e){
-        Console.WriteLine(e);
-      }
+      int movieDuration = ParseInt(input);
       
       Console.WriteLine("Enter Summary of the movie: ");
       string movieSummary = Console.ReadLine();
@@ -295,69 +124,40 @@ namespace GSCWindowApp
     public void editMovie(){
       Console.Write("Enter the movie ID to edit: ");
       string input = Console.ReadLine();
-      int movieID = 0;
-      try{
-        while(!Int32.TryParse(input, out movieID)){
-          Console.Write("Movie ID must be an integer!");
-          input = Console.ReadLine();
-        }
-      } catch (Exception e){
-        Console.WriteLine(e);
-      }
+      int movieID = ParseInt(input);
+
       string query = ("SELECT COUNT(*) FROM Movie WHERE movieID=" + movieID + ";");
       SQL sql = new SQL();
-      try
-      {   
-        sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
-        MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
+      if(sql.checkRowExists(query) > 0){
+        query = ("SELECT * FROM Movie WHERE movieID=" + movieID + ";");
         try{
-          object temp = cmd.ExecuteScalar();
-          int movieExists = Int32.Parse(temp.ToString());
-          if(movieExists > 0){
-            query = ("SELECT * FROM Movie WHERE movieID=" + movieID + ";");
-            cmd = new MySqlCommand(query, sql.Connection);
-            MySqlDataReader reader = cmd.ExecuteReader();
-            while(reader.Read()){
-              Console.WriteLine("---------------------------------------");
-              Console.WriteLine("\tMovie ID: " + reader.GetInt32(0));
-              Console.WriteLine("---------------------------------------");
-              Console.WriteLine("Movie Name: " + reader.GetString(1));
-              Console.WriteLine("Movie Age Rating: " + reader.GetString(2));
-              Console.WriteLine("Movie Duration: " + reader.GetInt32(3));
-              Console.WriteLine("Movie Summary: " + reader.GetString(4));
-              Console.WriteLine("Created Date: " + reader.GetDateTime(5).ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
-              Console.WriteLine("Availability: " + reader.GetBoolean(6));
-              Console.WriteLine("---------------------------------------");
-            }
-            sql.Connection.Close();
-            Console.WriteLine("Enter the attribute that you want to edit: ");
-            Console.WriteLine("(name/ageRating/duration/summary/createdDate/isAvailable)");
-            input = Console.ReadLine();
-            Console.Write("Enter the new value: ");
-            string newValue = Console.ReadLine();
-            sql.UpdateById("Movie", "movieID", movieID, input, newValue);
-          } else{
-            Console.WriteLine("No such movie ID! Please try again later.");
+          sql.Connection.Open();
+          MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
+          MySqlDataReader reader = cmd.ExecuteReader();
+          while(reader.Read()){
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("\tMovie ID: " + reader.GetInt32(0));
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Movie Name: " + reader.GetString(1));
+            Console.WriteLine("Movie Age Rating: " + reader.GetString(2));
+            Console.WriteLine("Movie Duration: " + reader.GetInt32(3));
+            Console.WriteLine("Movie Summary: " + reader.GetString(4));
+            Console.WriteLine("Created Date: " + reader.GetDateTime(5).ToString("dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture));
+            Console.WriteLine("Availability: " + reader.GetBoolean(6));
+            Console.WriteLine("---------------------------------------");
           }
+          sql.Connection.Close();
+          Console.WriteLine("Enter the attribute that you want to edit: ");
+          Console.WriteLine("(name/ageRating/duration/summary/createdDate/isAvailable)");
+          input = Console.ReadLine();
+          Console.Write("Enter the new value: ");
+          string newValue = Console.ReadLine();
+          sql.UpdateById("Movie", "movieID", movieID, input, newValue);
         } catch(Exception e){
           Console.WriteLine(e);
         }
-      }
-      catch (MySqlException e)
-      {
-        switch (e.Number)
-        {
-          case 0:
-            Console.WriteLine("Cannot connect to server. Please contact administrator!");
-            Console.WriteLine(e);
-            break;
-
-          case 1045:
-            Console.WriteLine("Invalid username/password, please try again");
-            Console.WriteLine(e);
-            break;
-        }
+      } else{
+        Console.WriteLine("No such movie ID! Please try again later.");
       }
     }
     public void removeMovie(){
@@ -453,6 +253,33 @@ namespace GSCWindowApp
             break;
         }
       }
+    }
+    private int ParseInt(string input){
+      int value = 0;
+      try{
+        while(!Int32.TryParse(input, out value)){
+          Console.Write("Input must be an integer! Please re-enter a valid integer: ");
+          input = Console.ReadLine();
+        }
+      } catch (Exception e){
+        Console.WriteLine(e);
+      }
+      
+      return value;
+    }
+    
+    private DateTime ParseDateTime(string input){
+      DateTime value = new DateTime();
+      try{
+        while(!DateTime.TryParse(input, out value)){
+          Console.WriteLine("Input must be a DateTime format! Please follow the format given.");
+          Console.Write("Please re-enter a valid DateTime by following the format <2016-09-25T13:00:00>: ");
+          input = Console.ReadLine();
+        }
+      } catch (Exception e){
+        Console.WriteLine(e);
+      }
+      return value;
     }
   }
 }

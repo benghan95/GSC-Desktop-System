@@ -167,6 +167,84 @@ namespace GSCWindowApp
         this.CloseConnection();
       }
     }
+    public int checkRowExists(string query){
+      int rowExists = 0;
+      if (this.OpenConnection() == true)
+      {
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        try{
+          object temp = cmd.ExecuteScalar();
+          this.CloseConnection();
+          rowExists = Int32.Parse(temp.ToString());
+          if(rowExists > 0){
+            return rowExists;
+          }
+        } catch (Exception e){
+          Console.WriteLine(e);
+        }
+      }
+      return rowExists;
+    }
+    public string getStringColumn(string query){
+      string value = null;
+      if (this.OpenConnection() == true)
+      {
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        try{
+          object temp = cmd.ExecuteScalar();
+          this.CloseConnection();
+          value = temp.ToString();
+        } catch (Exception e){
+          Console.WriteLine(e);
+        }
+      }
+      return value;
+    }
+    public int getIntColumn(string query){
+      int value = 0;
+      if (this.OpenConnection() == true)
+      {
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        try{
+          object temp = cmd.ExecuteScalar();
+          this.CloseConnection();
+          value = Int32.Parse(temp.ToString());
+        } catch (Exception e){
+          Console.WriteLine(e);
+        }
+      }
+      return value;
+    }
+    public DateTime getDateTimeColumn(string query){
+      DateTime value = new DateTime();
+      if (this.OpenConnection() == true)
+      {
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        try{
+          object temp = cmd.ExecuteScalar();
+          this.CloseConnection();
+          value = DateTime.Parse(temp.ToString());
+        } catch (Exception e){
+          Console.WriteLine(e);
+        }
+      }
+      return value;
+    }
+    public bool getBooleanColumn(string query){
+      bool value = false;
+      if (this.OpenConnection() == true)
+      {
+        MySqlCommand cmd = new MySqlCommand(query, connection);
+        try{
+          object temp = cmd.ExecuteScalar();
+          this.CloseConnection();
+          value = Boolean.Parse(temp.ToString());
+        } catch (Exception e){
+          Console.WriteLine(e);
+        }
+      }
+      return value;
+    }
   }
 }
 

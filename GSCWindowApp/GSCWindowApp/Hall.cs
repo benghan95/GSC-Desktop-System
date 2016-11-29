@@ -21,7 +21,6 @@ namespace GSCWindowApp
       try
       {   
         sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
         MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
         try{
           MySqlDataReader reader = cmd.ExecuteReader();
@@ -60,7 +59,6 @@ namespace GSCWindowApp
       try
       {   
         sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
         MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
         try{
           object temp = cmd.ExecuteScalar();
@@ -87,6 +85,27 @@ namespace GSCWindowApp
       }
       return capacity;
     }
+    public StringBuilder generateSeatsLayout(int hallID){
+      StringBuilder seatsLayout = new StringBuilder("");
+      char[] alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+      for (int i = 0; i < getNoOfRows(hallID); i ++){
+        for(int j = 1; j <= getNoOfColumns(hallID); j ++){
+          if(j < 10){
+            seatsLayout.Append(alphabets[i]);
+            seatsLayout.Append("0");
+            seatsLayout.Append(j);
+            seatsLayout.Append(" ");
+          } else{
+            seatsLayout.Append(alphabets[i]);
+            seatsLayout.Append(j);
+            seatsLayout.Append(" ");
+          }
+        }
+        seatsLayout.AppendLine("");
+      }
+      Console.WriteLine(seatsLayout);
+      return seatsLayout;
+    }
     public int getNoOfRows(int hallID){
       string query = ("SELECT noOfRows FROM Hall WHERE hallID=" + hallID + ";");
       int noOfRows = 0;
@@ -94,7 +113,6 @@ namespace GSCWindowApp
       try
       {   
         sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
         MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
         try{
           object temp = cmd.ExecuteScalar();
@@ -128,7 +146,6 @@ namespace GSCWindowApp
       try
       {   
         sql.Connection.Open();
-        Console.WriteLine("Connected to the database.");
         MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
         try{
           object temp = cmd.ExecuteScalar();
