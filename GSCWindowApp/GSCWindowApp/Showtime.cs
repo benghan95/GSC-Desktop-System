@@ -12,8 +12,10 @@ namespace GSCWindowApp
   {
     public Showtime(){
     }
-    public void reserveSeats(int showtimeID, string[] selectedSeats){
-      string query = ("SELECT seatsLayout FROM Showtime WHERE showtimeID=" + showtimeID + ";");
+    public void reserveSeats(int showtimeID, string[] selectedSeats, List<Ticket> ticketList){
+
+            Console.WriteLine("The size of ticket list after moving is " + ticketList.Count);
+            string query = ("SELECT seatsLayout FROM Showtime WHERE showtimeID=" + showtimeID + ";");
       SQL sql = new SQL();
       try{
         sql.Connection.Open();
@@ -23,15 +25,46 @@ namespace GSCWindowApp
         while(reader.Read()){
           seatsLayout = reader.GetString(0);
         }
-        sql.Connection.Close();
-        for(int i = 0; i < selectedSeats.Length; i ++){
-          seatsLayout = seatsLayout.Replace(selectedSeats[i], "   ");
+                sql.Connection.Close();
+
+                int i = 0;
+        int tickCode = 0;
+        foreach (Ticket tick in ticketList)
+                {
+                    Console.WriteLine("lol");
+                }
+        foreach (Ticket tick in ticketList)
+        {
+             seatsLayout = seatsLayout.Replace((selectedSeats[i] + " "), "");
+             query = ("INSERT INTO Ticket (seatNo, ticketPrice, ticketType, showtimeID) " +
+                          "VALUES('" + selectedSeats[i] + "', " + (double)tick.TicketPrice +
+                          ", '" + tick.TicketType + "', " + showtimeID + ");");
+                    Console.WriteLine(query);
+             sql.Insert(query);
+                query = ("SELECT ticketID from Ticket \nWHERE seatNo='" +
+                                selectedSeats[i] + "' \nAND showtimeID=" + showtimeID + ";");
+                    Console.WriteLine(query);
+                    MySqlCommand anotherCmd = new MySqlCommand(query, sql.Connection);
+                    sql.Connection.Open();
+                    reader = anotherCmd.ExecuteReader();
+                    reader.Read();
+                    tickCode = reader.GetInt32(0);
+                    sql.Connection.Close();
+                    tick.TicketCode = tickCode;
+                    Console.WriteLine("ticket code is: " + tick.TicketCode);
+                    i++;
         }
-        query = ("UPDATE Showtime SET seatsLayout=" + seatsLayout + " WHERE showtimeID=" + showtimeID + ";");
+                
+                seatsLayout = seatsLayout.Replace("\n", " ");
+                seatsLayout = seatsLayout.Replace("  ", " ");
+                
+        query = ("UPDATE Showtime SET seatsLayout='" + seatsLayout + "' WHERE showtimeID=" + showtimeID + ";");
         sql.Update(query);
         query = ("UPDATE Showtime SET ticketsAvailable = ticketsAvailable - " + selectedSeats.Length + " WHERE showtimeID=" + showtimeID + ";");
         sql.Update(query);
-        Console.WriteLine("The seats have been reserved!");
+
+       
+                Console.WriteLine("The seats have been reserved!");
       } catch(Exception e){
         Console.WriteLine(e);
       }
@@ -102,7 +135,7 @@ namespace GSCWindowApp
         
         if(sql.checkRowExists(query) > 0){
           query = ("INSERT INTO Showtime(startDateTime, endDateTime, ticketsAvailable, seatsLayout, movieID, hallID) VALUES('" + 
-                         startDateTime.ToString("s") + "', '" + startDateTime.AddDays(movieList.getDuration(movieID)).ToString("s") + "', " + 
+                         startDateTime.ToString("s") + "', '" + startDateTime.AddMinutes(movieList.getDuration(movieID)).ToString("s") + "', " + 
                          hallList.getCapacity(hallID) + ", '" + hallList.generateSeatsLayout(hallID) + "', " + movieID + ", " + hallID + ");");
           sql.Insert(query);
           Console.WriteLine("Showtime has been added");
@@ -126,6 +159,7 @@ namespace GSCWindowApp
       string query = ("SELECT COUNT(*) FROM Movie WHERE name LIKE '%" + input + "%';");
       SQL sql = new SQL();
       if(sql.checkRowExists(query) > 0){
+                Console.WriteLine("ada bang ada");
         query = ("SELECT movieID FROM Movie WHERE name LIKE '%" + input + "%';");
         try{
           sql.Connection.Open();
@@ -142,14 +176,14 @@ namespace GSCWindowApp
             Console.WriteLine("Movie Name: " + movieName);
             Console.WriteLine("Available Showtimes: ");
             query = ("SELECT st.startDateTime FROM Showtime st INNER JOIN Movie m ON st.movieID = m.movieID " +
-                      "WHERE st.movieID=" + movieID + " AND st.startDateTime>= '" + currentDateTime.ToString("s") + 
-                      "' AND st.endDateTime <= '" + tomorrowDateTime.ToString("s") + "' ORDER BY st.startDateTime ASC;");
+                      "WHERE st.movieID=" + movieID + 
+                      " AND st.endDateTime <= '" + tomorrowDateTime.ToString("s") + "' ORDER BY st.startDateTime ASC;");
             sql.Connection.Open();
             cmd = new MySqlCommand(query, sql.Connection);
             MySqlDataReader reader = cmd.ExecuteReader();
             int counter = 1;
             while(reader.Read()){
-              Console.WriteLine(counter + ". " + reader.GetDateTime(0).ToString("dd MMM HH:mm", CultureInfo.InvariantCulture));
+              Console.WriteLine(counter + ". " + reader.GetDateTime(0).ToString("HH:mm", CultureInfo.InvariantCulture));
               counter++;
             }
             sql.Connection.Close();
@@ -169,11 +203,13 @@ namespace GSCWindowApp
       currentDateTime = DateTime.Now.AddMinutes(-45);
       DateTime tomorrowDateTime = new DateTime();
       tomorrowDateTime = DateTime.Now.AddDays(2);
-      
-      string query = ("SELECT st.showtimeID, m.name, st.startDateTime FROM Showtime st INNER JOIN Movie m ON st.movieID = m.movieID " +
-                      "WHERE st.startDateTime >= '" + currentDateTime.ToString("s") + 
-                      "' AND st.endDateTime <= '" + tomorrowDateTime.ToString("s") + "' ORDER BY st.movieID ASC, st.startDateTime ASC;");
-      SQL sql = new SQL();
+            //Console.WriteLine("sampai sini juga dong");
+
+            string query = ("SELECT st.showtimeID, m.name, st.startDateTime FROM Showtime st INNER JOIN Movie m ON st.movieID = m.movieID " +
+                   
+                      " WHERE st.endDateTime <= '" + tomorrowDateTime.ToString("s") + "' ORDER BY st.movieID ASC, st.startDateTime ASC;");
+                    
+        SQL sql = new SQL();
       try
       {   
         sql.Connection.Open();
@@ -183,9 +219,9 @@ namespace GSCWindowApp
           int counter = 1;
           while(reader.Read()){
             Console.WriteLine("--------------- Showtime " + counter +" ---------------");
-            Console.WriteLine("Showtime ID: " + reader.GetInt32(0));
-            Console.WriteLine("Movie Name:  " + reader.GetString(1));
-            Console.WriteLine("Date & Time: " + reader.GetDateTime(2).ToString("dd MMM HH:mm", CultureInfo.InvariantCulture));
+            Console.WriteLine("Showtime ID : " + reader.GetInt32(0));
+            Console.WriteLine("Movie Name  :  " + reader.GetString(1));
+            Console.WriteLine("Time        : " + reader.GetDateTime(2).ToString("HH:mm", CultureInfo.InvariantCulture));
             Console.WriteLine("");
             counter++;
           }

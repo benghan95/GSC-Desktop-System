@@ -13,12 +13,14 @@ namespace GSCWindowApp
     private string ticketType;
     private int noOfTickets;
     private double ticketPrice;
+        private int ticketCode;
     
     public Ticket()
     {
       this.ticketType = null;
       this.ticketPrice = 0.00;
       this.noOfTickets = 0;
+            this.ticketCode = 0;
     }
     public Ticket(string ticketType, int noOfTickets, double ticketPrice)
     {
@@ -43,15 +45,13 @@ namespace GSCWindowApp
       
       if(sql.checkRowExists(query) > 0){
         selectedTicketList = selectTicket();
-        int totalNoOfTickets = 0;
-        foreach(Ticket ticket in selectedTicketList){
-          totalNoOfTickets += ticket.NoOfTickets;
-        }
+        int totalNoOfTickets = selectedTicketList.Count;
         Console.WriteLine("Total No. of Tickets: " + totalNoOfTickets);
         showtimeList.viewSeatsLayout(showtimeID);
         string[] selectedSeats = new string[totalNoOfTickets];
         for(int i = totalNoOfTickets, j = 0; i > 0; i--, j++){
-          Console.Write("Please choose the seats ID that you want (" + totalNoOfTickets + "remainings): ");
+          Console.Write("Please choose the seats ID that you want (" + i + "remainings): ");
+                    
           selectedSeats[j] = Console.ReadLine();
         }
         displayTicketsInformation(selectedTicketList);
@@ -61,13 +61,20 @@ namespace GSCWindowApp
           input = Console.ReadLine();
           switch(input){
             case "Y":
-              showtimeList.reserveSeats(showtimeID, selectedSeats);
-              printTickets(showtimeID, selectedTicketList);
+
+                            Console.WriteLine("The size of ticket list is " + selectedTicketList.Count);
+                showtimeList.reserveSeats(showtimeID, selectedSeats, selectedTicketList);
+                printTickets(showtimeID, selectedTicketList);
+                printReceipt(selectedTicketList);
+                online = false;
+            
               break;
             case "N":
-              showtimeList.reserveSeats(showtimeID, selectedSeats);
+              showtimeList.reserveSeats(showtimeID, selectedSeats, selectedTicketList);
               Console.WriteLine("Please pay at the counter when you collect your ticket.");
-              online = false;
+                            Console.WriteLine("Your ticket details:");
+                            printTickets(showtimeID, selectedTicketList);
+                            online = false;
               break;
             default:
               Console.WriteLine("Invalid Input. Enter either 'Y' or 'N'. Press any key to return to menu.");
@@ -103,28 +110,30 @@ namespace GSCWindowApp
       Console.WriteLine("\tTotal (include GST 6%): " + totalAmount*1.06);
       Console.WriteLine("------------------------------------------");
     }
-    public void printTickets(int showtimeID, List<Ticket> selectedTicketList){
-      string query = ("SELECT m.name FROM Showtime st INNER JOIN Movie m ON st.movieID = m.movieID " +
-                      "WHERE st.showtimeID=" + showtimeID + ";");
-      SQL sql = new SQL();
-      sql.Connection.Open();
-      MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
-      object temp = cmd.ExecuteScalar();
-      string movieName = temp.ToString();
-      
-      foreach(Ticket ticket in selectedTicketList){
-        for(int counter = 0; counter < ticket.NoOfTickets; counter ++){
-          Console.WriteLine("==========================================");
-          Console.WriteLine("---------------- e-Ticket ----------------");
-          Console.WriteLine("==========================================");
-          Console.WriteLine("\t" + "Movie Name: " + movieName);
-          Console.WriteLine("\t" + "Ticket Code: " + ticket.TicketPrice);
-          Console.WriteLine("\t" + "Ticket Type: " + ticket.TicketType);
-          Console.WriteLine("\t" + "Ticket Price: " + ticket.TicketPrice);
-          Console.WriteLine("==========================================");
+        public void printTickets(int showtimeID, List<Ticket> selectedTicketList)
+        {
+            string query = ("SELECT m.name FROM Showtime st INNER JOIN Movie m ON st.movieID = m.movieID " +
+                            "WHERE st.showtimeID=" + showtimeID + ";");
+            SQL sql = new SQL();
+            sql.Connection.Open();
+            MySqlCommand cmd = new MySqlCommand(query, sql.Connection);
+            object temp = cmd.ExecuteScalar();
+            string movieName = temp.ToString();
+
+            foreach (Ticket ticket in selectedTicketList)
+            {
+
+                Console.WriteLine("==========================================");
+                Console.WriteLine("---------------- e-Ticket ----------------");
+                Console.WriteLine("==========================================");
+                Console.WriteLine("\t" + "Movie Name: " + movieName);
+                Console.WriteLine("\t" + "Ticket Code: " + ticket.TicketCode);
+                Console.WriteLine("\t" + "Ticket Type: " + ticket.TicketType);
+                Console.WriteLine("\t" + "Ticket Price: " + ticket.TicketPrice);
+                Console.WriteLine("==========================================");
+
+            }
         }
-      }
-    }
     public List<Ticket> selectTicket(){
       List<Ticket> ticketList = new List<Ticket>();
 
@@ -146,28 +155,41 @@ namespace GSCWindowApp
         switch(input){
           case "1":
             Console.Write("Enter number of tickets (Adult): ");
-            input = Console.ReadLine();
-            Ticket adultTicket = new Ticket ("Adult", ParseInt(input), calcTicketPrice("Adult"));
-            ticketList.Add(adultTicket);
+            int tixAdult = Int32.Parse(Console.ReadLine());
+            for(int i=0; i < tixAdult; i++)
+            {
+                Ticket adultTicket = new Ticket("Adult", 1, calcTicketPrice("Adult"));
+                ticketList.Add(adultTicket);
+            }   
             break;
           case "2":
             Console.Write("Enter number of tickets (Children): ");
-            input = Console.ReadLine();
-            Ticket childTicket = new Ticket ("Adult", ParseInt(input), calcTicketPrice("Adult"));
-            ticketList.Add(childTicket);
+            int tixChild = Int32.Parse(Console.ReadLine());
+            for (int i = 0; i < tixChild; i++)
+            {
+                Ticket childTicket = new Ticket("Child", 1, calcTicketPrice("Child"));
+                ticketList.Add(childTicket);
+            }
+                        
             break;
           case "3":
             Console.Write("Enter number of tickets (Student): ");
-            input = Console.ReadLine();
-            Ticket studentTicket = new Ticket ("Adult", ParseInt(input), calcTicketPrice("Adult"));
-            ticketList.Add(studentTicket);
+            int tixStudent = Int32.Parse(Console.ReadLine());
+            for (int i = 0; i < tixStudent; i++)
+            {
+                Ticket studentTicket = new Ticket("Student", 1, calcTicketPrice("Student"));
+                ticketList.Add(studentTicket);
+            }
             break;
           case "4":
             Console.Write("Enter number of tickets (Senior): ");
-            input = Console.ReadLine();
-            Ticket seniorTicket = new Ticket ("Adult", ParseInt(input), calcTicketPrice("Adult"));
-            ticketList.Add(seniorTicket);
-            break;
+                        int tixSenior = Int32.Parse(Console.ReadLine());
+                        for (int i = 0; i < tixSenior; i++)
+                        {
+                            Ticket seniorTicket = new Ticket("Senior", 1, calcTicketPrice("Senior"));
+                            ticketList.Add(seniorTicket);
+                        }
+                        break;
           case "5":
             Console.Write("--------------------------");
             Console.WriteLine("Finish adding tickets! Please Confirm the Tickets:");
@@ -180,7 +202,7 @@ namespace GSCWindowApp
             break;
         }
       }
-      
+
       return ticketList;
     }
     public double calcTicketPrice(string ticketType){
@@ -237,7 +259,20 @@ namespace GSCWindowApp
         ticketPrice = value;
       }
     }
-    private int ParseInt(string input){
+
+        public int TicketCode
+        {
+            get
+            {
+                return ticketCode;
+            }
+
+            set
+            {
+                ticketCode = value;
+            }
+        }
+        private int ParseInt(string input){
       int value = 0;
       try{
         while(!Int32.TryParse(input, out value)){

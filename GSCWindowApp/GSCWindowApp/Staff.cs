@@ -35,7 +35,7 @@ namespace GSCWindowApp
         {
           case "1":
             Console.WriteLine("------------------------------------");
-            Console.WriteLine("---- 1. View Upcoming Showtimes ----");
+            Console.WriteLine("---- 1. View Today's Showtimes ----");
             Console.WriteLine("------------------------------------");
             viewShowtimes();
             break;
@@ -70,6 +70,8 @@ namespace GSCWindowApp
       }
     }
     private void viewShowtimes(){
+
+            //Console.WriteLine("sampai sini dong");
       Showtime showtimeList = new Showtime();
       showtimeList.displayTodaysShowtimes();
     }
